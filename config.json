@@ -1,0 +1,8 @@
+{
+  "dialect": "sqlite",
+  "storage": "MQTTdb.sqlite",
+  "dbName": "backendDB",
+  "dbUserName": "Csato",
+  "dbPWD": "Mate",
+  "port": 8080
+}
