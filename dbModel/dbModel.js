@@ -34,22 +34,24 @@ let MQTT_Message = sequelize.define('MQTTmessage', {
     message: {
         type: Sequelize.STRING,
     },
-    createdDate: {
+/*    createdDate: {
         type: Sequelize.DATE,
-    },
-    mqttTypeID: {
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+    },*/
+/*    mqttTypeID: {
         type: Sequelize.STRING,
-    },
-    deviceID: {
+    },*/
+/*    deviceID: {
         type: Sequelize.STRING,
-    }
+    }*/
 });
 
 /**
  * command: command or data
  * @type {Model}
  */
-let MQTT_type = sequelize.define('MQTTtype', {
+/*let MQTT_type = sequelize.define('MQTTtype', {
     unit: {
         type: Sequelize.STRING,
     },
@@ -57,22 +59,39 @@ let MQTT_type = sequelize.define('MQTTtype', {
         type: Sequelize.BOOLEAN,
         allowNull: false
     }
-});
+});*/
 
 let Device = sequelize.define('Device', {
-    deviceID: {
+    id: {
+        type: Sequelize.STRING,
+        primaryKey: true,
+    },
+    Name: {
         type: Sequelize.STRING,
     },
-    topicAddress: {
+    Type: {
         type: Sequelize.STRING,
+    },
+    UserID: {
+        type: Sequelize.STRING,
+    },
+    Auth: {
+        type: Sequelize.BOOLEAN,
     }
+});
+
+let Sensor = sequelize.define('Sensor', {
+   sensortype: {
+       type: Sequelize.STRING,
+   },
+
 });
 
 /**
  * Set foreign key
  */
-MQTT_Message.belongsTo(MQTT_type, {foreignKey: 'mqttTypeID'});
-MQTT_Message.belongsTo(Device, {foreignKey: 'deviceID'});
+/*MQTT_Message.belongsTo(MQTT_type, {foreignKey: 'mqttTypeID'});
+MQTT_Message.belongsTo(Device, {foreignKey: 'deviceID'});*/
 /**
  * Create schema if necessary
  */
@@ -81,7 +100,8 @@ sequelize.sync();
 module.exports = {
     User: User,
     MQTT_Message: MQTT_Message,
-    MQTT_type: MQTT_type,
-    Device: Device
+    //MQTT_type: MQTT_type,
+    Device: Device,
+    Sensor: Sensor
 };
 

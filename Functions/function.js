@@ -7,7 +7,7 @@ let c = require('ansi-colors');
 let User = dbModel.User;
 let Device = dbModel.Device;
 let MQTTmessage = dbModel.MQTT_Message;
-let MQTTtype = dbModel.MQTT_type;
+//let MQTTtype = dbModel.MQTT_type;
 
 //#region User's functions
 /**
@@ -97,17 +97,11 @@ function verifyPwd(loginPwd, dbPwd) {
  * Create MQTT messages to database
  * @param topic
  * @param message
- * @param createdDate
- * @param mqttTypeID
- * @param deviceID
  */
-function createMQTTmessage(topic, message, createdDate, mqttTypeID, deviceID) {
+function createMQTTmessage(topic, message) {
     MQTTmessage.create({
         topic: topic,
         message: message,
-        createdDate: createdDate,
-        mqttTypeID: mqttTypeID,
-        deviceID: deviceID
     })
         .catch(function (error) {
             console.log(c.red('Create MQTTmessage error: '), c.red(error));
@@ -121,13 +115,16 @@ function findAllMQTTmessage() {
 
 /**
  * Find all messages by device ID
- * @param deviceID
+ * @param device
  * @returns {Promise<Array<Model>>}
  */
-function findMessagebyDeviceID(deviceID) {
+function findMessagebyDeviceID(device) {
+    let OP = Sequelize.Op;
     return MQTTmessage.findAll({
         where: {
-            deviceID: deviceID
+            topic: {
+                [Op.like]:'%' + device + '%'
+            }
         }
     })
 }
@@ -137,39 +134,13 @@ function findMessagebyDeviceID(deviceID) {
  * @param typeID
  * @returns {Promise<Array<Model>>}
  */
-function findMessagebyTypeID(typeID) {
+/*function findMessagebyTypeID(typeID) {
     return MQTTmessage.findAll({
         where: {
             deviceID: typeID
         }
     })
-}
-
-//#endregion
-
-//#region MQTTtype's functions
-/**
- * Create MQTT type to database
- * @param unit
- * @param command
- */
-function createMQTTtype(unit, command) {
-    MQTTtype.create({
-        unit: unit,
-        command: command
-    })
-        .catch(function (error) {
-            console.log(c.red('Create MQTTtype error: '), c.red(error));
-        })
-}
-
-/**
- * Return all MQTT type from database
- * @returns {*}
- */
-function findAllMQTTtype() {
-    return MQTTtype.findAll();
-}
+}*/
 
 //#endregion
 
@@ -177,13 +148,19 @@ function findAllMQTTtype() {
 /**
  * Create Devices to database
  * @param deviceID
- * @param topicAddress
+ * @param name
  */
-function createDevice(deviceID, topicAddress) {
+function createDevice(deviceID, name) {
     Device.create({
-        deviceID: deviceID,
-        topicAddress: topicAddress
+        id: deviceID,
+        Name: name,
+        Type: type,
+        UserID: userID,
+        Auth: auth,
     })
+        .catch(function (error) {
+            console.log(c.red('Create Device error: '), c.red(error));
+        })
 }
 
 /**
@@ -201,7 +178,7 @@ function findAllDevice() {
  */
 function findDeviceByDeviceID(deviceID) {
     return Device.findAll({
-        where: {deviceID: deviceID}
+        where: {id: deviceID}
     })
 }
 
@@ -212,19 +189,19 @@ module.exports = {
     createUser: createUser,
     createDevice: createDevice,
     createMQTTmessage: createMQTTmessage,
-    createMQTTtype: createMQTTtype,
+    //createMQTTtype: createMQTTtype,
 
     updateUserById:updateUserById,
     verifyPwd:verifyPwd,
 
     findAllUser: findAllUser,
     findAllDevice: findAllDevice,
-    findAllMQTTtype: findAllMQTTtype,
+    //findAllMQTTtype: findAllMQTTtype,
     findAllMQTTmessage: findAllMQTTmessage,
 
     findUser: findUser,
     findUserContainsName: findUserContainsName,
-    findMessagebyTypeID: findMessagebyTypeID,
+    //findMessagebyTypeID: findMessagebyTypeID,
     findMessagebyDeviceID: findMessagebyDeviceID,
     findDeviceByDeviceID: findDeviceByDeviceID,
 

@@ -4,5 +4,11 @@
   "dbName": "backendDB",
   "dbUserName": "Csato",
   "dbPWD": "Mate",
-  "port": 8080
+  "port": 8080,
+
+  "mqttPort": 1883,
+  "mqttUrl": "http://localhost",
+  "mqttUrlPort": 27017,
+  "mqttHost": "192.168.0.116"
+
 }

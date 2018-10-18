@@ -3,6 +3,7 @@ let app = express();
 let config = require('./config');
 let c = require('ansi-colors');
 let func = require('./Functions/function');
+let mqttBroker = require('./MQTT/mqttBroker');
 
 let server = app.listen(config.port, function () {
     let host = server.address().address;
@@ -38,4 +39,4 @@ function main() {
 
 }
 
-main();
+//main();
