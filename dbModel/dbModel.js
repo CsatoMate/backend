@@ -27,6 +27,10 @@ let User = sequelize.define('user', {
     }
 });
 
+/**
+ * Log data
+ * @type {Model}
+ */
 let MQTT_Message = sequelize.define('MQTTmessage', {
     topic: {
         type: Sequelize.STRING,
@@ -61,6 +65,10 @@ let MQTT_Message = sequelize.define('MQTTmessage', {
     }
 });*/
 
+/**
+ *
+ * @type {Model}
+ */
 let Device = sequelize.define('Device', {
     id: {
         type: Sequelize.STRING,
@@ -80,11 +88,37 @@ let Device = sequelize.define('Device', {
     }
 });
 
+/**
+ * Különböző sensor típusok mit mérnek
+ * Difference Sensor type what things measured
+ * @type {Model}
+ */
 let Sensor = sequelize.define('Sensor', {
    sensortype: {
        type: Sequelize.STRING,
    },
+    measured_type: {
+       type: Sequelize.STRING,
+    },
+    devicesID: {
+       type: Sequelize.STRING,
+    }
+});
 
+/**
+ * Last save data from device
+ * @type {Model}
+ */
+let SensorLastData = sequelize.define('SensorLastData', {
+    sensorId: {
+        type: Sequelize.STRING,
+    },
+    value: {
+        type: Sequelize.STRING,
+    },
+    unit: {
+        type: Sequelize.STRING,
+    }
 });
 
 /**
@@ -102,6 +136,7 @@ module.exports = {
     MQTT_Message: MQTT_Message,
     //MQTT_type: MQTT_type,
     Device: Device,
-    Sensor: Sensor
+    Sensor: Sensor,
+    SensorLastData: SensorLastData
 };
 

@@ -9,6 +9,8 @@
   "mqttPort": 1883,
   "mqttUrl": "http://localhost",
   "mqttUrlPort": 27017,
-  "mqttHost": "192.168.0.116"
-
+  "mqttHost": "127.0.0.1",
+  "mqttHostL": "192.168.0.116"
 }
+
+
